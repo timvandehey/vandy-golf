@@ -1,0 +1,30 @@
+{
+  "name": "golf-tracker",
+  "version": "1.0.0",
+  "type": "module",
+  "scripts": {
+    "dev:frontend": "vite",
+    "dev:backend": "bun dev-server.js",
+    "dev": "concurrently \"bun run dev:backend\" \"bun run dev:frontend\"",
+    "build": "vite build",
+    "start": "bun dev-server.js",
+    "deploy:dev": "bun run build && npx wrangler pages deploy dist --branch=dev",
+    "deploy:prod": "bun run build && npx wrangler pages deploy dist --branch=main",
+    "prod": "bun run deploy:prod",
+    "beta": "bun run deploy:dev",
+    "import": "bun run scripts/import-csv.js",
+    "menu": "bun run scripts/menu.js",
+    "server": "bun run headless/server.js"
+  },
+  "dependencies": {
+    "better-sqlite3": "^11.8.1",
+    "lit": "^3.3.3"
+  },
+  "devDependencies": {
+    "concurrently": "^10.0.5",
+    "esbuild": "^0.25.0",
+    "vite": "^8.2.1",
+    "vite-plugin-pwa": "^1.3.0",
+    "wrangler": "^4.86.0"
+  }
+}

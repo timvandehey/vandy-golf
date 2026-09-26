@@ -1,0 +1,581 @@
+:root {
+  /* -------------------------------------------------------------------------
+     Base Color Channels (Hue, Saturation)
+     ------------------------------------------------------------------------- */
+  --base-neutral:    0, 0%;       /* Grayscale / Neutrals */
+  --base-golf:       142, 60%;    /* Golf Green Primary */
+  --base-blue:       210, 85%;    /* Accent / Info */
+  --base-amber:      38, 92%;     /* Warning / Eagle / Bogey */
+  --base-red:        0, 80%;      /* Danger / Double Bogey+ */
+  --base-gold:       45, 95%;     /* Trophy / Best Diff */
+
+  /* -------------------------------------------------------------------------
+     UI Colors (Derived using Lightness %)
+     ------------------------------------------------------------------------- */
+  --background:          hsl(var(--base-neutral), 98%);
+  --card-bg:             hsl(var(--base-neutral), 100%);
+  --drawer-bg:           hsl(var(--base-neutral), 100%);
+  --hover-bg:            hsl(var(--base-neutral), 95%);
+
+  /* Borders */
+  --border-color:        hsl(var(--base-neutral), 88%);
+  --border-color-hover:  hsl(var(--base-neutral), 75%);
+  --border-radius:       0.375rem;
+  --border-radius-pill:  9999px;
+
+  /* Typography / Text Tones */
+  --color:               hsl(var(--base-neutral), 12%);
+  --text-body:           hsl(var(--base-neutral), 22%);
+  --text-muted-3:        hsl(var(--base-neutral), 33%);
+  --text-muted-2:        hsl(var(--base-neutral), 45%);
+  --text-muted:          hsl(var(--base-neutral), 55%);
+  --text-faint:          hsl(var(--base-neutral), 70%);
+
+  /* Primary Golf Green Palette */
+  --golf-dark:           hsl(var(--base-golf), 20%);
+  --golf-primary:        hsl(var(--base-golf), 35%);
+  --golf-light:          hsl(var(--base-golf), 92%);
+  --golf-border:         hsl(var(--base-golf), 70%);
+
+  /* Actions & Status */
+  --go:                  hsl(var(--base-golf), 35%);
+  --stop:                hsl(var(--base-red), 50%);
+  --danger-bg:           hsl(var(--base-red), 96%);
+
+  /* Scoring Highlights */
+  --score-eagle:         hsl(var(--base-gold), 50%);
+  --score-birdie:        hsl(var(--base-golf), 40%);
+  --score-par:           hsl(var(--base-neutral), 40%);
+  --score-bogey:         hsl(var(--base-amber), 45%);
+  --score-double:        hsl(var(--base-red), 50%);
+
+  /* Differentials */
+  --diff-counting-bg:    hsl(var(--base-golf), 92%);
+  --diff-counting-border:hsl(var(--base-golf), 50%);
+  --diff-counting-text:  hsl(var(--base-golf), 22%);
+
+  /* Links & Accents */
+  --link-color:          hsl(var(--base-golf), 32%);
+  --link-color-hover:    hsl(var(--base-golf), 20%);
+
+  /* z-index scale */
+  --z-popup: 100;
+  --z-drawer-backdrop: 1000;
+  --z-drawer-panel: 1001;
+
+  --transition-speed:    0.15s;
+  --white:               hsl(0, 0%, 100%);
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  height: 100dvh;
+  display: grid;
+  grid-template-rows: auto 1fr auto;
+  overflow: hidden;
+  font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  margin: 0 0.75rem;
+  background: var(--background);
+  color: var(--color);
+}
+
+app-home, app-feed, app-reader, app-editor, app-stats, app-courses, app-settings {
+  display: contents;
+}
+
+header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0.5rem 0;
+  border-bottom: 1px solid var(--border-color);
+  gap: 0.75rem;
+}
+
+main {
+  grid-row: 2;
+  min-height: 0;
+  overflow-y: auto;
+  padding: 1rem 0;
+}
+
+footer {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 0.5rem 0;
+  border-top: 1px solid var(--border-color);
+  margin-top: auto;
+  font-size: 0.75rem;
+  color: var(--text-muted);
+  background: var(--card-bg);
+}
+
+/* Header Elements */
+.header-title-group {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.app-brand-title {
+  margin: 0;
+  font-size: 1.25rem;
+  font-weight: 700;
+  color: var(--golf-dark);
+  display: flex;
+  align-items: center;
+  gap: 0.375rem;
+}
+
+/* Player Segmented Toggle */
+.player-toggle-group {
+  display: inline-flex;
+  background: var(--hover-bg);
+  border: 1px solid var(--border-color);
+  border-radius: var(--border-radius-pill);
+  padding: 0.15rem;
+  gap: 0.15rem;
+  align-items: center;
+}
+
+.player-toggle-btn {
+  font-family: inherit;
+  font-size: 0.82rem;
+  font-weight: 600;
+  border: none;
+  background: transparent;
+  color: var(--text-muted-2);
+  padding: 0.25rem 0.65rem;
+  border-radius: var(--border-radius-pill);
+  cursor: pointer;
+  transition: background 0.15s ease, color 0.15s ease;
+  line-height: 1.1;
+}
+
+.player-toggle-btn:hover {
+  color: var(--color);
+}
+
+.player-toggle-btn.active {
+  background: var(--golf-dark);
+  color: var(--white);
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.15);
+}
+
+.header-index-pill {
+  background: var(--golf-dark);
+  color: var(--white);
+  padding: 0.2rem 0.6rem;
+  border-radius: var(--border-radius-pill);
+  font-size: 0.85rem;
+  font-weight: 700;
+  letter-spacing: 0.5px;
+}
+
+/* Cards & Layouts */
+.feed-cards, .courses-cards, .stats-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(min(100%, 35ch), 1fr));
+  gap: 1rem;
+}
+
+.card {
+  border: 1px solid var(--border-color);
+  border-radius: var(--border-radius);
+  padding: 1rem;
+  background: var(--card-bg);
+  transition: box-shadow 0.2s ease, border-color 0.2s ease;
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+.card:hover {
+  border-color: var(--border-color-hover);
+  box-shadow: 0 0.125rem 0.5rem rgba(0, 0, 0, 0.06);
+}
+
+.card-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 0.5rem;
+  border-bottom: 1px solid var(--border-color);
+  padding-bottom: 0.5rem;
+}
+
+.card-course-title {
+  margin: 0;
+  font-size: 1.15rem;
+  font-weight: 600;
+  color: var(--golf-dark);
+  cursor: pointer;
+  text-decoration: none;
+}
+.card-course-title:hover {
+  color: var(--golf-primary);
+  text-decoration: underline;
+}
+
+.card-meta-subtitle {
+  font-size: 0.85rem;
+  color: var(--text-muted-2);
+  margin-top: 0.15rem;
+}
+
+.card-score-badge-group {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 0.2rem;
+}
+
+.card-score-value {
+  font-size: 1.5rem;
+  font-weight: 800;
+  line-height: 1;
+  color: var(--color);
+}
+
+.card-diff-pill {
+  font-size: 0.75rem;
+  font-weight: 700;
+  padding: 0.15rem 0.45rem;
+  border-radius: var(--border-radius-pill);
+  background: var(--hover-bg);
+  color: var(--text-muted-3);
+  border: 1px solid var(--border-color);
+}
+.card-diff-pill.counting {
+  background: var(--diff-counting-bg);
+  color: var(--diff-counting-text);
+  border-color: var(--diff-counting-border);
+}
+
+.card-stats-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+}
+
+.stat-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.25rem;
+  font-size: 0.8rem;
+  background: var(--hover-bg);
+  padding: 0.2rem 0.5rem;
+  border-radius: var(--border-radius);
+  color: var(--text-muted-3);
+}
+.stat-pill strong {
+  color: var(--color);
+}
+
+.card-notes {
+  font-size: 0.85rem;
+  color: var(--text-muted-2);
+  font-style: italic;
+  margin: 0;
+}
+
+/* Quick Stats Top Bar in Feed */
+.quick-stats-bar {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+  margin-bottom: 1.25rem;
+}
+
+.quick-stat-card {
+  flex: 1 1 18ch;
+  background: var(--card-bg);
+  border: 1px solid var(--border-color);
+  border-radius: var(--border-radius);
+  padding: 0.75rem 1rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+}
+
+.quick-stat-label {
+  font-size: 0.75rem;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  color: var(--text-muted-2);
+  font-weight: 600;
+}
+
+.quick-stat-val {
+  font-size: 1.4rem;
+  font-weight: 800;
+  color: var(--golf-dark);
+}
+
+.quick-stat-sub {
+  font-size: 0.75rem;
+  color: var(--text-muted);
+}
+
+/* Search bar */
+.feed-search-bar {
+  display: flex;
+  align-items: center;
+  border: 2px solid var(--color);
+  border-radius: var(--border-radius);
+  width: 100%;
+  margin-bottom: 1rem;
+  background: var(--card-bg);
+}
+.feed-search-bar:focus-within {
+  border-color: var(--golf-primary);
+}
+
+input[type="search"], input[type="text"], input[type="date"], input[type="number"], select, textarea {
+  font-family: inherit;
+  font-size: 1rem;
+  padding: 0.5rem;
+  border: 1px solid var(--border-color);
+  border-radius: var(--border-radius);
+  background: var(--card-bg);
+  color: var(--color);
+  outline: none;
+}
+input[type="search"] {
+  width: 100%;
+  border: none;
+  font-size: 1.1rem;
+  padding: 0.5rem 0.75rem;
+}
+input:focus, select:focus, textarea:focus {
+  border-color: var(--golf-primary);
+  outline: 2px solid var(--golf-light);
+}
+
+/* Scorecard Table (Lit web components) */
+.scorecard-table-wrapper {
+  overflow-x: auto;
+  border: 1px solid var(--border-color);
+  border-radius: var(--border-radius);
+  background: var(--card-bg);
+  margin-bottom: 1rem;
+}
+
+.scorecard-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.9rem;
+  text-align: center;
+}
+
+.scorecard-table th, .scorecard-table td {
+  padding: 0.4rem 0.5rem;
+  border: 1px solid var(--border-color);
+  min-width: 2.5rem;
+}
+
+.scorecard-table th {
+  background: var(--hover-bg);
+  font-weight: 600;
+  font-size: 0.8rem;
+  color: var(--text-muted-2);
+}
+
+.scorecard-table .hole-col {
+  font-weight: bold;
+}
+.scorecard-table .total-col {
+  font-weight: bold;
+  background: var(--hover-bg);
+}
+
+.scorecard-input {
+  width: 2.25rem;
+  text-align: center;
+  padding: 0.2rem;
+  font-weight: bold;
+  border: 1px solid var(--border-color);
+  border-radius: 3px;
+}
+
+/* Forms & Editor Layout */
+.form-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(min(100%, 25ch), 1fr));
+  gap: 1rem;
+  margin-bottom: 1rem;
+}
+
+.form-group {
+  display: flex;
+  flex-direction: column;
+  gap: 0.35rem;
+}
+
+.form-group label {
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: var(--text-muted-3);
+}
+
+/* Drawer overlay backdrop */
+.drawer-backdrop {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.4);
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.3s ease;
+  z-index: var(--z-drawer-backdrop);
+}
+.drawer-backdrop.active {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+/* Slide-out drawer panel */
+.drawer-panel {
+  position: fixed;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  width: 35ch;
+  background: var(--drawer-bg);
+  box-shadow: 0.125rem 0 0.5rem rgba(0, 0, 0, 0.15);
+  transform: translateX(-100%);
+  transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  z-index: var(--z-drawer-panel);
+  padding: 1.25rem;
+  box-sizing: border-box;
+  overflow-y: auto;
+}
+.drawer-panel.active {
+  transform: translateX(0);
+}
+
+.drawer-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 1.25rem;
+  border-bottom: 1px solid var(--border-color);
+  padding-bottom: 0.75rem;
+}
+
+.drawer-title {
+  margin: 0;
+  font-size: 1.25rem;
+  font-weight: 600;
+  color: var(--golf-dark);
+}
+
+.drawer-nav {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.drawer-nav-item {
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 0.625rem;
+  padding: 0.625rem;
+  border-radius: var(--border-radius);
+  font-weight: 500;
+  transition: background 0.15s ease;
+  color: var(--color);
+  text-decoration: none;
+}
+.drawer-nav-item:hover, .drawer-nav-item.active {
+  background-color: var(--hover-bg);
+  color: var(--golf-primary);
+}
+
+/* Button micro-component styling */
+app-btn {
+  display: inline-flex;
+}
+
+app-btn .app-btn-inner, button.app-btn-inner {
+  font-family: inherit;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.35rem;
+  padding: 0.45rem 0.85rem;
+  font-size: 0.9rem;
+  font-weight: 600;
+  border-radius: var(--border-radius);
+  border: 1px solid var(--border-color);
+  background: var(--card-bg);
+  color: var(--color);
+  cursor: pointer;
+  transition: background 0.15s ease, border-color 0.15s ease;
+  line-height: 1;
+}
+app-btn .app-btn-inner:hover {
+  background: var(--hover-bg);
+  border-color: var(--border-color-hover);
+}
+app-btn .app-btn-inner.btn-primary {
+  background: var(--golf-primary);
+  color: var(--white);
+  border-color: var(--golf-primary);
+}
+app-btn .app-btn-inner.btn-primary:hover {
+  background: var(--golf-dark);
+  border-color: var(--golf-dark);
+}
+app-btn .app-btn-inner.btn-danger {
+  background: var(--card-bg);
+  color: var(--stop);
+  border-color: var(--stop);
+}
+app-btn .app-btn-inner.btn-danger:hover {
+  background: var(--danger-bg);
+}
+app-btn .app-btn-inner.btn-icon {
+  padding: 0.35rem;
+  border: none;
+  background: transparent;
+}
+app-btn .app-btn-inner.btn-icon:hover {
+  background: var(--hover-bg);
+}
+
+/* Modal Dialog */
+.dialog-backdrop {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.45);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 2000;
+  padding: 1rem;
+}
+.dialog-box {
+  background: var(--card-bg);
+  border-radius: var(--border-radius);
+  border: 1px solid var(--border-color);
+  box-shadow: 0 0.5rem 1.5rem rgba(0,0,0,0.2);
+  width: min(95vw, 45ch);
+  padding: 1.25rem;
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+.dialog-header {
+  font-size: 1.1rem;
+  font-weight: 700;
+  margin: 0;
+}
+.dialog-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 0.5rem;
+}

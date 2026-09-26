@@ -1,0 +1,10 @@
+{
+  "compilerOptions": {
+    "baseUrl": ".",
+    "paths": {
+      "@/*": ["src/js/*"],
+      "@core/*": ["../vandy-core/*"]
+    }
+  },
+  "exclude": ["node_modules", "dist"]
+}

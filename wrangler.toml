@@ -1,0 +1,8 @@
+name = "golf-tracker"
+compatibility_date = "2024-04-05"
+pages_build_output_dir = "./dist"
+
+[[d1_databases]]
+binding = "DB"
+database_name = "golf_db"
+database_id = "golf-db-local"
