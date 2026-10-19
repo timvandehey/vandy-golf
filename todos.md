@@ -27,6 +27,7 @@
 - [x] Root container (`app-home`) & App bootstrap (`src/js/main.js`)
 
 ## Next Steps / Future Enhancements [ ]
+- [ ] [vandy-auth-integration-plan.md](docs/vandy-auth-integration-plan.md) (Centralized SSO and role gating)
 - [ ] 9-hole round combining rules (WHS 2024 expected score method)
 - [x] CSV / GHIN round data import & export (`scripts/import-csv.js`)
 - [ ] Advanced hole-by-hole shot tracking & strokes gained stats
